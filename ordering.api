@@ -1,0 +1,34 @@
+type Order {
+	Table int    `json:"table"`
+	Items []Item `json:"item"`
+}
+
+type AddOrder {
+	Id       string `json:"id"`
+	NewItems []Item `json:"item"`
+}
+
+type CreatedOrder {
+	Id           string  `json:"id"`
+	CreatedDate  string  `json:"created_date"`
+	Table        int     `json:"table"`
+	Items        []Item  `json:"item"`
+	Paid         bool    `json:"paid"`
+	Status       string  `json:"status"`
+	SummaryPrice float64 `json:"summary_price"`
+}
+
+type Item {
+	Name       string  `json:"name"`
+	Count      int     `json:"count"`
+	PiecePrice float64 `json:"price_per_piece"`
+}
+
+service ordering {
+	@handler createOrder
+	post /api/orders/create (Order) returns (CreatedOrder)
+	@handler updateOrder
+	put /api/orders/:id/update (Order) returns (CreatedOrder)
+	@handler addOrder
+	put /api/orders/:id/add (Order) returns (CreatedOrder)
+}

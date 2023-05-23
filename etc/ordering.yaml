@@ -1,0 +1,11 @@
+Name: ordering
+Host: 0.0.0.0
+Port: 8888
+
+DatabaseType: postgres
+Postgres:
+  Host: localhost
+  Port: "5432"
+  Username: hiraishin
+  Password: hiraishin
+  DbName: qr
