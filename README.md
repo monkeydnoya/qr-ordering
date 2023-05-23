@@ -1,6 +1,6 @@
-QR Ordering Service
+# QR Ordering Service
 
-Description: Ordering service stores all created orders by clients and has methods to update and add new items to existing order.
+## Description: Ordering service stores all created orders by clients and has methods to update and add new items to existing order.
 
 Configration file loaded from ./etc/ordering.yaml
 
