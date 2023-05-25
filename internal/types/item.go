@@ -11,6 +11,7 @@ type ItemEntity struct {
 	PiecePrice   float64   `json:"price_per_piece"`
 	SummaryPrice float64   `json:"summary_price"`
 	OrderId      uuid.UUID `json:"order_id"`
+	IsDilivered  bool      `json:"delivered"`
 }
 
 func (ie *ItemEntity) TableName() string {
@@ -19,9 +20,10 @@ func (ie *ItemEntity) TableName() string {
 
 func (ie *ItemEntity) ToModel() Item {
 	return Item{
-		Name:       ie.Name,
-		Count:      ie.Count,
-		PiecePrice: ie.PiecePrice,
+		Name:        ie.Name,
+		Count:       ie.Count,
+		PiecePrice:  ie.PiecePrice,
+		IsDilivered: ie.IsDilivered,
 	}
 }
 
@@ -32,5 +34,6 @@ func (i *Item) ToEntity() ItemEntity {
 		Count:        i.Count,
 		PiecePrice:   i.PiecePrice,
 		SummaryPrice: summaryPrice,
+		IsDilivered:  i.IsDilivered,
 	}
 }

@@ -23,8 +23,12 @@ func NewAddOrderLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddOrder
 	}
 }
 
-func (l *AddOrderLogic) AddOrder(req *types.Order) (resp *types.CreatedOrder, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+func (l *AddOrderLogic) AddOrder(req *types.AddToOrder) error {
+	err := l.svcCtx.Db.AddToOrder(l.ctx, *req)
+	if err != nil {
+		l.Logger.Errorw("order: could not add new items to order",
+			logx.LogField{Key: "id", Value: req.Id},
+			logx.LogField{Key: "err", Value: err})
+	}
+	return nil
 }

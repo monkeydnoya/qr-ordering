@@ -3,12 +3,12 @@ package types
 
 type Order struct {
 	Table int    `json:"table"`
-	Items []Item `json:"item"`
+	Items []Item `json:"items"`
 }
 
-type AddOrder struct {
-	Id       string `json:"id"`
-	NewItems []Item `json:"item"`
+type AddToOrder struct {
+	Id string `path:"id"`
+	Items []Item `json:"items"`
 }
 
 type CreatedOrder struct {
@@ -25,4 +25,5 @@ type Item struct {
 	Name       string  `json:"name"`
 	Count      int     `json:"count"`
 	PiecePrice float64 `json:"price_per_piece"`
+	IsDilivered bool `json:"delivered"` 
 }

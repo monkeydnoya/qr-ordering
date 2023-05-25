@@ -8,7 +8,7 @@ import (
 
 type OrderEntity struct {
 	Id           uuid.UUID    `json:"id" gorm:"primary_key;type:uuid;default:uuid_generate_v4()"`
-	CreatedDate  time.Time    `json:"created_date"`
+	CreatedDate  int64        `json:"created_date"`
 	Table        int          `json:"table"`
 	Paid         bool         `json:"paid"`
 	Status       string       `json:"status"`
@@ -27,7 +27,7 @@ func (oe *OrderEntity) ToModel() CreatedOrder {
 	}
 	return CreatedOrder{
 		Id:           oe.Id.String(),
-		CreatedDate:  oe.CreatedDate.Format(time.RFC3339),
+		CreatedDate:  time.Unix(oe.CreatedDate, 0).String(),
 		Table:        oe.Table,
 		Items:        items,
 		Paid:         oe.Paid,
