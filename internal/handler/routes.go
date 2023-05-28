@@ -11,22 +11,26 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/orders/create",
-				Handler: createOrderHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPut,
-				Path:    "/api/orders/:id/update",
-				Handler: updateOrderHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPut,
-				Path:    "/api/orders/:id/add",
-				Handler: addOrderHandler(serverCtx),
-			},
-		},
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Middleware},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/create",
+					Handler: createOrderHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPut,
+					Path:    "/:table/update",
+					Handler: updateOrderHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPut,
+					Path:    "/:table/add",
+					Handler: addOrderHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/api/ordering/orders"),
 	)
 }

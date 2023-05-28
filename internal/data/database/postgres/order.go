@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"context"
-	"fmt"
 	"qr-ordering-service/internal/types"
 	"time"
 
@@ -12,13 +11,11 @@ import (
 
 func (pg *pgConnection) CreateOrder(ctx context.Context, order types.Order) (types.CreatedOrder, error) {
 	var summaryPrice float64
-	fmt.Println(order.Items)
 	itemsEntity := make([]types.ItemEntity, 0)
 	for i, item := range order.Items {
 		itemsEntity = append(itemsEntity, item.ToEntity())
 		summaryPrice = summaryPrice + float64(itemsEntity[i].SummaryPrice)
 	}
-	fmt.Println(itemsEntity)
 
 	orderEntity := types.OrderEntity{
 		CreatedDate:  time.Now().Unix(),

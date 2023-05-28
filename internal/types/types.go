@@ -27,3 +27,12 @@ type Item struct {
 	PiecePrice float64 `json:"price_per_piece"`
 	IsDilivered bool `json:"delivered"` 
 }
+
+type Table struct {
+	Number int
+	Token string
+}
+
+type TableNumber struct {
+	Number int `path:"table"`
+}

@@ -9,3 +9,7 @@ Postgres:
   Username: hiraishin
   Password: hiraishin
   DbName: qr
+
+QrAuthType: qrauth
+Qrauth:
+  Url: http://localhost:8000/api/auth/table-validate

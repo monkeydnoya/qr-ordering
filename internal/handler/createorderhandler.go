@@ -3,10 +3,11 @@ package handler
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"qr-ordering-service/internal/logic"
 	"qr-ordering-service/internal/svc"
 	"qr-ordering-service/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 func createOrderHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
@@ -16,7 +17,6 @@ func createOrderHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
-
 		l := logic.NewCreateOrderLogic(r.Context(), svcCtx)
 		resp, err := l.CreateOrder(&req)
 		if err != nil {
