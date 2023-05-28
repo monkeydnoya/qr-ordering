@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"context"
+	"fmt"
 	"qr-ordering-service/internal/types"
 	"time"
 
@@ -11,6 +12,7 @@ import (
 
 func (pg *pgConnection) CreateOrder(ctx context.Context, order types.Order) (types.CreatedOrder, error) {
 	var summaryPrice float64
+	var existingOrders []types.OrderEntity
 	itemsEntity := make([]types.ItemEntity, 0)
 	for i, item := range order.Items {
 		itemsEntity = append(itemsEntity, item.ToEntity())
@@ -35,6 +37,23 @@ func (pg *pgConnection) CreateOrder(ctx context.Context, order types.Order) (typ
 				logx.LogField{Key: "err", Value: r})
 		}
 	}()
+	// Search order with this table with status !done.
+	if err := tx.Model(types.OrderEntity{Table: order.Table}).Where("public.orders.table = ? AND status != 'done'", order.Table).Find(&existingOrders).Error; err != nil {
+		tx.Rollback()
+		pg.log.Errorw("postgres: failed to search order of existing table",
+			logx.LogField{Key: "table", Value: order.Table},
+			logx.LogField{Key: "err", Value: err})
+		return types.CreatedOrder{}, err
+	}
+
+	fmt.Println(existingOrders)
+	if len(existingOrders) > 0 {
+		pg.log.Errorw("postgres: failed to create order",
+			logx.LogField{Key: "table", Value: order.Table},
+			logx.LogField{Key: "err", Value: ErrTableIsServicing})
+		return types.CreatedOrder{}, ErrTableIsServicing
+	}
+
 	if err := tx.Create(&orderEntity).Error; err != nil {
 		tx.Rollback()
 		pg.log.Errorw("postgres: failed to create order",
