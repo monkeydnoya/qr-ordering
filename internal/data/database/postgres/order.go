@@ -2,13 +2,24 @@ package postgres
 
 import (
 	"context"
-	"fmt"
 	"qr-ordering-service/internal/types"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
 	"github.com/zeromicro/go-zero/core/logx"
 )
+
+func (pg *pgConnection) GetOrder(ctx context.Context, id string) (types.CreatedOrder, error) {
+	var orderEntity types.OrderEntity
+	if err := pg.db.Model(types.OrderEntity{}).Where("id = ?", id).Find(&orderEntity).Error; err != nil {
+		pg.log.Errorw("postgres: failed to search order",
+			logx.LogField{Key: "order", Value: id},
+			logx.LogField{Key: "err", Value: err})
+		return types.CreatedOrder{}, err
+	}
+
+	return orderEntity.ToModel(), nil
+}
 
 func (pg *pgConnection) CreateOrder(ctx context.Context, order types.Order) (types.CreatedOrder, error) {
 	var summaryPrice float64
@@ -46,8 +57,8 @@ func (pg *pgConnection) CreateOrder(ctx context.Context, order types.Order) (typ
 		return types.CreatedOrder{}, err
 	}
 
-	fmt.Println(existingOrders)
 	if len(existingOrders) > 0 {
+		tx.Rollback()
 		pg.log.Errorw("postgres: failed to create order",
 			logx.LogField{Key: "table", Value: order.Table},
 			logx.LogField{Key: "err", Value: ErrTableIsServicing})

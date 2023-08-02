@@ -26,7 +26,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 				{
 					Method:  http.MethodPut,
-					Path:    "/:table/add",
+					Path:    "/:id/add",
 					Handler: addOrderHandler(serverCtx),
 				},
 			}...,

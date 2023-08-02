@@ -13,7 +13,8 @@ type AddToOrder struct {
 
 type CreatedOrder struct {
 	Id           string  `json:"id"`
-	CreatedDate  string  `json:"created_date"`
+	CreatedDate  int64   `json:"created_date"`
+	FinishDate   int64   `json:"finish_date"`
 	Table        int     `json:"table"`
 	Items        []Item  `json:"item"`
 	Paid         bool    `json:"paid"`
