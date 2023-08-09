@@ -19,12 +19,12 @@ func (oe *OrderEntity) TableName() string {
 	return "orders"
 }
 
-func (oe *OrderEntity) ToModel() CreatedOrder {
+func (oe *OrderEntity) ToModel() Order {
 	items := make([]Item, 0)
 	for _, ie := range oe.Items {
 		items = append(items, ie.ToModel())
 	}
-	return CreatedOrder{
+	return Order{
 		Id:           oe.Id.String(),
 		CreatedDate:  oe.CreatedDate,
 		FinishDate:   oe.FinishDate,

@@ -20,6 +20,7 @@ func (ie *ItemEntity) TableName() string {
 
 func (ie *ItemEntity) ToModel() Item {
 	return Item{
+		Id:          ie.ItemId.String(),
 		Name:        ie.Name,
 		Count:       ie.Count,
 		PiecePrice:  ie.PiecePrice,
@@ -29,7 +30,9 @@ func (ie *ItemEntity) ToModel() Item {
 
 func (i *Item) ToEntity() ItemEntity {
 	summaryPrice := float64(i.Count) * i.PiecePrice
+	itemId, _ := uuid.FromString(i.Id)
 	return ItemEntity{
+		ItemId:       itemId,
 		Name:         i.Name,
 		Count:        i.Count,
 		PiecePrice:   i.PiecePrice,

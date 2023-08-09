@@ -23,7 +23,7 @@ func NewCreateOrderLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Creat
 	}
 }
 
-func (l *CreateOrderLogic) CreateOrder(req *types.Order) (resp *types.CreatedOrder, err error) {
+func (l *CreateOrderLogic) CreateOrder(req *types.OrderCreate) (resp *types.Order, err error) {
 	createdOrder, err := l.svcCtx.Db.CreateOrder(l.ctx, *req)
 	if err != nil {
 		l.Logger.Errorw("order: could not create order",

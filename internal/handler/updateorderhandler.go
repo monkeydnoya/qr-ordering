@@ -3,10 +3,11 @@ package handler
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"qr-ordering-service/internal/logic"
 	"qr-ordering-service/internal/svc"
 	"qr-ordering-service/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 func updateOrderHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

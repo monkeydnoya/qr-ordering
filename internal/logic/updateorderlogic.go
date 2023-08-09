@@ -23,7 +23,7 @@ func NewUpdateOrderLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Updat
 	}
 }
 
-func (l *UpdateOrderLogic) UpdateOrder(req *types.Order) (resp *types.CreatedOrder, err error) {
+func (l *UpdateOrderLogic) UpdateOrder(req *types.Order) (resp *types.Order, err error) {
 	// todo: add your logic here and delete this line
 
 	return
