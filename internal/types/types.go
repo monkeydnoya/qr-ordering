@@ -26,15 +26,17 @@ type Item struct {
 	Id           string  `json:"id"`
 	Name       string  `json:"name"`
 	Count      int     `json:"count"`
-	PiecePrice float64 `json:"price_per_piece"`
-	IsDilivered bool `json:"delivered"` 
+	UnitPrice float64 `json:"unit_piece"`
+	IsDilivered bool `json:"delivered"`
+	PositionId int `json:"position_id"`
 }
 
 type ItemCreate struct {
 	Name       string  `json:"name"`
 	Count      int     `json:"count"`
-	PiecePrice float64 `json:"price_per_piece"`
-	IsDilivered bool `json:"delivered"` 
+	UnitPrice float64 `json:"unit_piece"`
+	IsDilivered bool `json:"delivered"`
+	PositionId int `json:"position_id"`
 }
 
 type Table struct {

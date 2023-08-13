@@ -38,9 +38,10 @@ func (pg *pgConnection) CreateOrder(ctx context.Context, order types.OrderCreate
 		itemEntity := types.ItemEntity{
 			Name:         item.Name,
 			Count:        item.Count,
-			PiecePrice:   item.PiecePrice,
-			SummaryPrice: float64(item.Count) * item.PiecePrice,
+			UnitPrice:    item.UnitPrice,
+			SummaryPrice: float64(item.Count) * item.UnitPrice,
 			IsDilivered:  false,
+			PositionId:   item.PositionId,
 		}
 		itemsEntity = append(itemsEntity, itemEntity)
 		summaryPrice = summaryPrice + float64(itemsEntity[i].SummaryPrice)
@@ -116,9 +117,10 @@ func (pg *pgConnection) AddToOrder(ctx context.Context, addition types.AddToOrde
 		newItemsEntity := types.ItemEntity{
 			Name:         item.Name,
 			Count:        item.Count,
-			PiecePrice:   item.PiecePrice,
-			SummaryPrice: float64(item.Count) * item.PiecePrice,
+			UnitPrice:    item.UnitPrice,
+			SummaryPrice: float64(item.Count) * item.UnitPrice,
 			IsDilivered:  false,
+			PositionId:   item.PositionId,
 		}
 		newItemsEntities = append(newItemsEntities, newItemsEntity)
 		newSummaryPrice = newSummaryPrice + newItemsEntity.SummaryPrice

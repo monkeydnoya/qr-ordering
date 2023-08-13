@@ -8,10 +8,11 @@ type ItemEntity struct {
 	ItemId       uuid.UUID `json:"id" gorm:"primary_key;type:uuid;default:uuid_generate_v4()"`
 	Name         string    `json:"name"`
 	Count        int       `json:"count"`
-	PiecePrice   float64   `json:"price_per_piece"`
+	UnitPrice    float64   `json:"unit_piece"`
 	SummaryPrice float64   `json:"summary_price"`
 	OrderId      uuid.UUID `json:"order_id"`
 	IsDilivered  bool      `json:"delivered"`
+	PositionId   int       `json:"position_id"`
 }
 
 func (ie *ItemEntity) TableName() string {
@@ -23,20 +24,22 @@ func (ie *ItemEntity) ToModel() Item {
 		Id:          ie.ItemId.String(),
 		Name:        ie.Name,
 		Count:       ie.Count,
-		PiecePrice:  ie.PiecePrice,
+		UnitPrice:   ie.UnitPrice,
 		IsDilivered: ie.IsDilivered,
+		PositionId:  ie.PositionId,
 	}
 }
 
 func (i *Item) ToEntity() ItemEntity {
-	summaryPrice := float64(i.Count) * i.PiecePrice
+	summaryPrice := float64(i.Count) * i.UnitPrice
 	itemId, _ := uuid.FromString(i.Id)
 	return ItemEntity{
 		ItemId:       itemId,
 		Name:         i.Name,
 		Count:        i.Count,
-		PiecePrice:   i.PiecePrice,
+		UnitPrice:    i.UnitPrice,
 		SummaryPrice: summaryPrice,
 		IsDilivered:  i.IsDilivered,
+		PositionId:   i.PositionId,
 	}
 }

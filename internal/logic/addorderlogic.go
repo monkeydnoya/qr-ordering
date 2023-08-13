@@ -55,7 +55,7 @@ func (l *AddOrderLogic) AddOrder(req *types.AddToOrder) error {
 						logx.LogField{Key: "err", Value: err})
 					return err
 				}
-				err = l.svcCtx.Db.UpdateOrderSummaryPrice(l.ctx, req.Id, newItem.PiecePrice*float64(newItem.Count))
+				err = l.svcCtx.Db.UpdateOrderSummaryPrice(l.ctx, req.Id, newItem.UnitPrice*float64(newItem.Count))
 				if err != nil {
 					l.Logger.Errorw("order: failed to update order summary price",
 						logx.LogField{Key: "id", Value: req.Id},

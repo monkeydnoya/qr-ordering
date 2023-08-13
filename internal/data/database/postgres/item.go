@@ -31,7 +31,7 @@ func (pg *pgConnection) UpdateItemCount(ctx context.Context, itemId string, coun
 	}
 
 	updatedCount := itemEntity.Count + count
-	updatedSummaryPrice := itemEntity.SummaryPrice + itemEntity.PiecePrice*float64(count)
+	updatedSummaryPrice := itemEntity.SummaryPrice + itemEntity.UnitPrice*float64(count)
 	fmt.Println(updatedSummaryPrice)
 
 	if err := tx.Model(itemEntity).Update("count", updatedCount).Error; err != nil {
